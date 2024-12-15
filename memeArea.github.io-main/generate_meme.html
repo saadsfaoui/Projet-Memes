@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Mèmes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.11/dist/interact.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+    <style>
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(to right, #f9f9f9, #99ccff, #cc99ff);
+        }
+        .hover-bounce:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+        .fun-shadow {
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .neon-button {
+            border-radius: 12px;
+            background-color: #f48fb1;
+            padding: 0.5em 1em;
+            text-shadow: 0px 0px 4px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        .neon-button:hover {
+            background-color: #ec407a;
+            box-shadow: 0px 0px 8px #ff99cc, 0px 0px 20px #ff99cc;
+            transform: translateY(-2px);
+        }
+        .cool-input {
+            border: 2px solid #6699ff;
+            transition: box-shadow 0.3s ease;
+        }
+        .cool-input:focus {
+            box-shadow: 0px 0px 8px #99ccff;
+        }
+        .text-overlay {
+            position: absolute;
+            cursor: move;
+            padding: 5px;
+            background-color: transparent;
+            border: none;
+            color: #000;
+            
+            left: 50%;
+        }
+        #text-overlay-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            max-width: 500px;
+            overflow: hidden; /* Empêche le contenu de déborder */
+        }
+        #meme-image {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }
+        #top-text-overlay {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        #secondary-text-overlay {
+            font-size: 2em;
+            font-weight: bold;
+
+            margin-top: 0.5em;
+            bottom: 80px;
+        }
+    </style>
+    <script>
+        
+    
+        function shareMeme() {
+          alert('Le meme a été partagé!');
+        }
+        function redirectToGenerate() {
+            window.location.href = 'generate_meme.html';
+        }
+        function redirectToAcceuil() {
+            window.location.href = 'acceuil.html';
+        }
+        function redirectToProfile() {
+            window.location.href = 'mon_espace.html';
+        }
+        function showSection(sectionId, button) {
+       // Masquer toutes les sections de contenu
+       document.querySelectorAll('.content-section').forEach(section => {
+         section.classList.add('hidden');
+       });
+       
+       // Afficher la section sélectionnée
+       document.getElementById(sectionId).classList.remove('hidden');
+       
+       // Réinitialiser les styles de tous les boutons
+       document.querySelectorAll('.flex button').forEach(btn => {
+         btn.classList.remove('bg-blue-500', 'text-white');
+         btn.classList.add('bg-gray-300', 'text-gray-700');
+       });
+       
+       // Appliquer le style actif au bouton sélectionné
+       button.classList.remove('bg-gray-300', 'text-gray-700');
+       button.classList.add('bg-blue-500', 'text-white');
+     }
+       function incrementLike(button) {
+         const countElement = button.querySelector('.like-count');
+         let count = parseInt(countElement.textContent);
+         countElement.textContent = count + 1;
+       }
+    
+       
+       function shareMeme() {
+         alert('Le meme a été partagé!');
+       }
+    
+       // Fonction pour afficher/masquer le menu mobile
+       function toggleMenu() {
+         const menu = document.getElementById("mobile-menu");
+         menu.classList.toggle("hidden");
+       }
+       function switchButton(sectionId, button) {
+       // Masquer toutes les sections de contenu
+       document.querySelectorAll('.content-section').forEach(section => {
+         section.classList.add('hidden');
+       });
+       
+       // Afficher la section sélectionnée
+       document.getElementById(sectionId).classList.remove('hidden');
+       
+       // Réinitialiser les styles de tous les boutons
+       document.querySelectorAll('.flex button').forEach(btn => {
+         btn.classList.remove('bg-blue-500', 'text-white');
+         btn.classList.add('bg-gray-300', 'text-gray-700');
+       });
+       
+       // Appliquer le style actif au bouton sélectionné
+       button.classList.remove('bg-gray-300', 'text-gray-700');
+       button.classList.add('bg-blue-500', 'text-white');
+     }
+     function switchActiveButton(clickedButton) {
+     // Sélectionne uniquement les boutons dans la section principale
+     const buttons = document.querySelectorAll('main .toggle-button');
+    
+     buttons.forEach(button => {
+       if (button === clickedButton) {
+         button.classList.remove('bg-gray-300', 'text-gray-700');
+         button.classList.add('bg-blue-500', 'text-white');
+       } else {
+         button.classList.add('bg-gray-300', 'text-gray-700');
+         button.classList.remove('bg-blue-500', 'text-white');
+       }
+     });
+    }
+    
+    function highlightButton(clickedButton) {
+       // Sélectionner tous les boutons avec la classe 'section-button'
+       document.querySelectorAll('.section-button').forEach(button => {
+         // Réinitialiser chaque bouton en gris
+         button.classList.remove('bg-blue-500', 'text-white');
+         button.classList.add('bg-gray-300', 'text-gray-700');
+       });
+       // Appliquer la couleur bleue uniquement au bouton cliqué
+       clickedButton.classList.remove('bg-gray-300', 'text-gray-700');
+       clickedButton.classList.add('bg-blue-500', 'text-white');
+     }
+     
+     function switchSection(sectionId, clickedButton) {
+       // Masquer toutes les sections de contenu
+       document.querySelectorAll('.content-section').forEach(section => {
+         section.classList.add('hidden');
+       });
+       
+       // Afficher la section sélectionnée
+       document.getElementById(sectionId).classList.remove('hidden');
+    
+       // Réinitialiser les styles de tous les boutons
+       document.querySelectorAll('.section-button').forEach(button => {
+         button.classList.remove('bg-blue-500', 'text-white');
+         button.classList.add('bg-gray-300', 'text-gray-700');
+       });
+    
+       // Appliquer le style actif au bouton sélectionné
+       clickedButton.classList.remove('bg-gray-300', 'text-gray-700');
+       clickedButton.classList.add('bg-blue-500', 'text-white');
+     }
+     function updateImage() {
+            const input = document.getElementById('file-upload');
+            const file = input.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('meme-image').src = e.target.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Add text to the meme
+        function addText() {
+    const topText = document.getElementById('top-text').value;
+    const secondaryText = document.getElementById('secondary-text').value;
+
+    const topTextColor = document.getElementById('top-text-color').value;
+    const secondaryTextColor = document.getElementById('secondary-text-color').value;
+
+    const topTextOverlay = document.getElementById('top-text-overlay');
+    const secondaryTextOverlay = document.getElementById('secondary-text-overlay');
+
+    // Mettre à jour le texte et la couleur
+    topTextOverlay.textContent = topText;
+    topTextOverlay.style.color = topTextColor;
+
+    secondaryTextOverlay.textContent = secondaryText;
+    secondaryTextOverlay.style.color = secondaryTextColor;
+}
+
+        
+
+        // Fonction de déplacement et de redimensionnement limitée au conteneur
+        function makeInteractable(elementId) {
+            interact(elementId)
+                .draggable({
+                    modifiers: [
+                        interact.modifiers.restrictRect({
+                            restriction: "#text-overlay-container",
+                            endOnly: true
+                        })
+                    ],
+                    listeners: {
+                        move(event) {
+                            const target = event.target;
+                            const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+                            const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+                            target.style.transform = `translate(${x}px, ${y}px)`;
+                            target.setAttribute('data-x', x);
+                            target.setAttribute('data-y', y);
+                        }
+                    }
+                })
+                .resizable({
+                    edges: { left: true, right: true, bottom: true, top: true },
+                    modifiers: [
+                        interact.modifiers.restrictEdges({
+                            outer: "#text-overlay-container"
+                        }),
+                        interact.modifiers.restrictSize({
+                            min: { width: 50, height: 40 },
+                        })
+                    ]
+                })
+                .on('resizemove', (event) => {
+                    const target = event.target;
+                    let x = (parseFloat(target.getAttribute('data-x')) || 0);
+                    let y = (parseFloat(target.getAttribute('data-y')) || 0);
+                    target.style.width = `${event.rect.width}px`;
+                    target.style.height = `${event.rect.height}px`;
+                    x += event.deltaRect.left;
+                    y += event.deltaRect.top;
+                    target.style.transform = `translate(${x}px, ${y}px)`;
+                    target.setAttribute('data-x', x);
+                    target.setAttribute('data-y', y);
+                });
+        }
+
+        // Rendre les deux éléments interactifs
+        makeInteractable('#top-text-overlay');
+        makeInteractable('#secondary-text-overlay');
+        function resetContent() {
+    // Réinitialiser l'image à son état initial
+    const memeImage = document.getElementById('meme-image');
+    memeImage.src = '20.png';  // Remettre l'image par défaut (vérifiez que cette image est correcte)
+
+    // Réinitialiser les champs de texte principal et secondaire
+    document.getElementById('top-text').value = '';  // Efface le champ de texte principal
+    document.getElementById('secondary-text').value = '';  // Efface le champ de texte secondaire
+
+    // Réinitialiser les éléments de superposition de texte (overlay)
+    document.getElementById('top-text-overlay').textContent = 'Texte 1';  // Remet le texte par défaut
+    document.getElementById('secondary-text-overlay').textContent = 'Texte 2';  // Remet le texte secondaire par défaut
+
+    // Réinitialiser la position des overlays de texte si nécessaire
+    document.getElementById('top-text-overlay').style.transform = 'translate(0px, 30px)';  // Remettre la position initiale
+    document.getElementById('secondary-text-overlay').style.transform = 'translate(0px,10px)'; 
+    document.getElementById('top-text-overlay').style.color = "black";  // Remettre la position initiale
+    document.getElementById('secondary-text-overlay').style.color = "black"; // Ajustez cette valeur si nécessaire
+
+    // Réinitialiser le nom de fichier sélectionné
+    document.getElementById('file-name').textContent = 'Aucun fichier choisi';  // Réinitialise le texte d'affichage pour le fichier
+}
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.add('hidden');
+      });
+      // Show the selected section
+      document.getElementById(sectionId).classList.remove('hidden');
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById("mobile-menu");
+      menu.classList.toggle("hidden");
+    }
+
+    function toggleSettings() {
+      // Hide main content and show settings section
+      showSection('parametres');
+    }
+
+     </script>
+    
+</head>
+<body class="min-h-screen flex flex-col items-center">
+
+  
+   <!-- Header -->
+   <header class="bg-slate-200 flex items-center justify-between p-4 w-full  shadow-md fixed top-0 left-0 z-50">
+    <div class="flex items-center space-x-2 sm:space-x-3">
+      <img src="logo.jpg" alt="Logo" class="w-8 sm:w-10 h-8 sm:h-10 rounded-full">
+      <span class="text-lg sm:text-2xl font-bold text-gray-800">MemeAREA</span>
+    </div>
+    
+    <div class="relative w-full max-w-[200px] sm:max-w-xs md:max-w-sm flex items-center">
+      <input type="text" placeholder="Recherchez sur MemeArea" class="pl-10 pr-4 py-1 sm:py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full text-sm sm:text-base transition-all duration-300">
+      <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+        <i class="fas fa-search text-gray-500 text-sm sm:text-base"></i>
+      </div>
+    </div>
+  
+    <!-- Hamburger Menu for Mobile -->
+    <button class="sm:hidden text-gray-700 ml-2" onclick="toggleMenu()">
+      <i class="fas fa-bars text-xl"></i>
+    </button>
+  
+    <!-- Desktop Menu Buttons -->
+    <div class="hidden sm:flex items-center space-x-3 sm:space-x-4">
+      <!-- Settings button triggers the settings section -->
+      <button class="text-gray-700 hover:text-white" onclick="toggleSettings()"><i class="fas fa-cog text-xl sm:text-2xl"></i></button>
+      <button onclick="redirectToAcceuil()" class="bg-[#FFCCFF] text-gray-800 font-semibold px-2 md:px-4 py-1 md:py-2 rounded-lg shadow hover:bg-[#FF99CC] hover:text-white">Acceuil</button>
+      <button onclick="redirectToGenerate()" class="bg-white text-[#6699FF] font-semibold px-2 md:px-4 py-1 md:py-2 rounded-lg shadow hover:bg-[#336699] hover:text-white">Créer</button>
+      <div class="flex items-center space-x-1 sm:space-x-2">
+        <i class="fas fa-user-circle text-2xl sm:text-3xl text-gray-700"></i>
+        <button onclick="redirectToProfile()" class="text-gray-700 font-medium text-sm sm:text-base hover:text-white">Mon espace</button>
+      </div>
+    </div>
+  </header>
+
+ 
+
+  <!-- Parametres section -->
+  <section class="content-section hidden p-6  bg-white rounded-lg shadow-lg max-w-3xl mx-auto mt-20" id="parametres">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Paramètres</h2>
+    <p>Réglez vos préférences d'application et votre profil ici.</p>
+    <!-- Settings options -->
+    <div class="mt-4 space-y-4">
+      <div class="flex items-center justify-between">
+        <label class="text-gray-700">Recevoir des notifications</label>
+        <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
+      </div>
+      <div class="flex items-center justify-between">
+        <label class="text-gray-700">Mode sombre</label>
+        <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
+      </div>
+      <div class="flex items-center justify-between">
+        <label class="text-gray-700">Langue</label>
+        <select class="border rounded px-2 py-1">
+          <option value="fr">Français</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </div>
+    <!-- Back to main content button -->
+    <button onclick="showSection('main-content')" class="mt-6 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Retour</button>
+  </section>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="sm:hidden hidden flex-col space-y-2 items-center p-4 bg-gradient-to-r from-gray-500 to-gray-300 fixed top-16 left-0 w-full z-40">
+    <button onclick="redirectToAcceuil()" class="bg-[#FFCCFF] text-gray-800 font-semibold px-2 py-1 rounded-lg shadow hover:bg-[#FF99CC] hover:text-white w-full text-center">Acceuil</button>
+    <button onclick="redirectToGenerate()" class="bg-white text-[#6699FF] font-semibold px-2 py-1 rounded-lg shadow hover:bg-[#336699] hover:text-white w-full text-center">Créer</button>
+    <button onclick="redirectToProfile()" class="text-gray-700 font-medium text-sm sm:text-base hover:text-white w-full text-center">Mon espace</button>
+    <button onclick="toggleSettings()" class="text-gray-700 font-medium text-sm sm:text-base hover:text-white w-full text-center">Paramètres</button>
+  </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-8 space-y-6">
+        <h2 class="text-5xl font-extrabold text-center text-[#5784BB] mt-24">Meme Generator</h2>
+
+        <!-- Meme Preview Section -->
+        <div class="flex flex-col md:flex-row gap-8 justify-center items-center">
+          <!-- Meme Image Area -->
+          <div  id="text-overlay-container" class="image-container w-full md:w-1/2 p-4 bg-gray-200 rounded-lg shadow-lg fun-shadow">
+              <img id="meme-image" src="20.png" alt="Meme" class="w-full max-w-md h-auto rounded-lg shadow-xl mx-auto">
+              <!-- Zones pour le texte principal et le texte secondaire -->
+        <div id="top-text-overlay" class="text-overlay" style="top: 60px;">Texte 1</div>
+        <div id="secondary-text-overlay" class="text-overlay" >Texte 2</div>
+          </div>
+
+            <!-- Meme Controls -->
+            <div class="space-y-6 bg-white p-6 rounded-lg shadow-md fun-shadow" style="width: 400px;">
+              <div class="flex gap-4">
+                    <button class="flex-1 bg-[#F8F4CF] text-black py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all hover-bounce">Espacement</button>
+                    <button class="flex-1 bg-[#F8F4CF] text-black py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all hover-bounce">Ajouter objet</button>
+                    <button class="flex-1 bg-[#F8F4CF] text-black py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all hover-bounce">Dessiner</button>
+                </div>
+
+                <div class="space-y-4">
+                  <div class="space-y-4">
+                    <label class="block text-gray-700 font-bold">Télécharger image</label>
+                    <div class="relative">
+                        <input type="file" id="file-upload" class="hidden" onchange="updateImage()">
+                        <label for="file-upload" class="flex items-center justify-center w-full py-3 px-4 bg-[#F8F4CF] text-black rounded-lg shadow-md cursor-pointer transition-all hover-bounce">
+                            Choisir un fichier
+                        </label>
+                        <p id="file-name" class="mt-2 text-gray-600 italic"></p>
+                    </div>
+                
+                
+                        <!-- Text Area for Showing File Name -->
+                        <p id="file-name" class="mt-2 text-gray-600 italic"></p>
+                    </div>
+                </div>
+                
+                <!-- JavaScript to Update File Name -->
+                <script>
+                    function updateFileName() {
+                        const input = document.getElementById('file-upload');
+                        const fileName = input.files.length > 0 ? input.files[0].name : 'Aucun fichier choisi';
+                        document.getElementById('file-name').textContent = fileName;
+                    }
+                </script>
+
+<div class="space-y-4">
+  <label class="block text-gray-700 font-bold">Texte 1</label>
+  <input type="text" id="top-text" class="w-full p-3 cool-input text-gray-800 bg-gray-100 rounded-lg shadow-sm">
+  
+  <label class="block text-gray-700 font-bold">Couleur du texte 2</label>
+  <input type="color" id="top-text-color" value="#FFFFFF" class="w-full p-3 cool-input text-gray-800 bg-gray-100 rounded-lg shadow-sm">
+  
+  <label class="block text-gray-700 font-bold">Texte 2</label>
+  <input type="text" id="secondary-text" class="w-full p-3 cool-input text-gray-800 bg-gray-100 rounded-lg shadow-sm">
+  
+  <label class="block text-gray-700 font-bold">Couleur du texte 2</label>
+  <input type="color" id="secondary-text-color" value="#FFFFFF" class="w-full p-3 cool-input text-gray-800 bg-gray-100 rounded-lg shadow-sm">
+</div>
+
+                    
+                    
+                  
+
+                <div class="flex gap-4">
+                    <button class="flex-1 bg-[#F8F4CF] text-black py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all hover-bounce">Effet</button>
+                    <button onclick="addText()" class="flex-1 bg-[#F8F4CF] text-black py-2 rounded-lg transition-all hover-bounce">Ajouter texte</button>
+                </div>
+            </div>
+        </div>
+
+
+
+      <!-- Generate/Reset Buttons -->
+      <div class="flex justify-between mt-6">
+          <button class="bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600 hover-bounce transition-all">Générer</button>
+          <button onclick="resetContent()" id="reset-button" class="bg-red-500 text-white py-3 px-6 rounded-lg hover:bg-red-600 hover-bounce transition-all">Réinitialiser</button>
+        
+      </div>
+    </main>
+
+</body>
+</html>

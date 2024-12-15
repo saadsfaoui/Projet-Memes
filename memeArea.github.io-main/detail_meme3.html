@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MemeArea</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script>
+    function incrementHeart(button) {
+      const countElement = button.querySelector('.heart-count');
+      let count = parseInt(countElement.textContent);
+      countElement.textContent = count + 1;
+    }
+
+    function shareMeme() {
+      alert('Le meme a été partagé!');
+    }
+    function redirectToGenerate() {
+        window.location.href = 'generate_meme.html';
+    }
+    function redirectToAcceuil() {
+        window.location.href = 'acceuil.html';
+    }
+    function showMemeDetails() {
+        window.location.href = 'detail_meme.html';
+    }
+    function redirectToProfile() {
+        window.location.href = 'mon_espace.html';
+    }
+    function showSection(sectionId, button) {
+   // Masquer toutes les sections de contenu
+   document.querySelectorAll('.content-section').forEach(section => {
+     section.classList.add('hidden');
+   });
+   
+   // Afficher la section sélectionnée
+   document.getElementById(sectionId).classList.remove('hidden');
+   
+   // Réinitialiser les styles de tous les boutons
+   document.querySelectorAll('.flex button').forEach(btn => {
+     btn.classList.remove('bg-blue-500', 'text-white');
+     btn.classList.add('bg-gray-300', 'text-gray-700');
+   });
+   
+   // Appliquer le style actif au bouton sélectionné
+   button.classList.remove('bg-gray-300', 'text-gray-700');
+   button.classList.add('bg-blue-500', 'text-white');
+ }
+   function incrementLike(button) {
+     const countElement = button.querySelector('.like-count');
+     let count = parseInt(countElement.textContent);
+     countElement.textContent = count + 1;
+   }
+
+   function incrementHeart(button) {
+     const countElement = button.querySelector('.heart-count');
+     let count = parseInt(countElement.textContent);
+     countElement.textContent = count + 1;
+   }
+
+   function shareMeme() {
+     alert('Le meme a été partagé!');
+   }
+
+   // Fonction pour afficher/masquer le menu mobile
+   function toggleMenu() {
+     const menu = document.getElementById("mobile-menu");
+     menu.classList.toggle("hidden");
+   }
+   function switchButton(sectionId, button) {
+   // Masquer toutes les sections de contenu
+   document.querySelectorAll('.content-section').forEach(section => {
+     section.classList.add('hidden');
+   });
+   
+   // Afficher la section sélectionnée
+   document.getElementById(sectionId).classList.remove('hidden');
+   
+   // Réinitialiser les styles de tous les boutons
+   document.querySelectorAll('.flex button').forEach(btn => {
+     btn.classList.remove('bg-blue-500', 'text-white');
+     btn.classList.add('bg-gray-300', 'text-gray-700');
+   });
+   
+   // Appliquer le style actif au bouton sélectionné
+   button.classList.remove('bg-gray-300', 'text-gray-700');
+   button.classList.add('bg-blue-500', 'text-white');
+ }
+ function switchActiveButton(clickedButton) {
+ // Sélectionne uniquement les boutons dans la section principale
+ const buttons = document.querySelectorAll('main .toggle-button');
+
+ buttons.forEach(button => {
+   if (button === clickedButton) {
+     button.classList.remove('bg-gray-300', 'text-gray-700');
+     button.classList.add('bg-blue-500', 'text-white');
+   } else {
+     button.classList.add('bg-gray-300', 'text-gray-700');
+     button.classList.remove('bg-blue-500', 'text-white');
+   }
+ });
+}
+
+function highlightButton(clickedButton) {
+   // Sélectionner tous les boutons avec la classe 'section-button'
+   document.querySelectorAll('.section-button').forEach(button => {
+     // Réinitialiser chaque bouton en gris
+     button.classList.remove('bg-blue-500', 'text-white');
+     button.classList.add('bg-gray-300', 'text-gray-700');
+   });
+   // Appliquer la couleur bleue uniquement au bouton cliqué
+   clickedButton.classList.remove('bg-gray-300', 'text-gray-700');
+   clickedButton.classList.add('bg-blue-500', 'text-white');
+ }
+ 
+ function switchSection(sectionId, clickedButton) {
+   // Masquer toutes les sections de contenu
+   document.querySelectorAll('.content-section').forEach(section => {
+     section.classList.add('hidden');
+   });
+   
+   // Afficher la section sélectionnée
+   document.getElementById(sectionId).classList.remove('hidden');
+
+   // Réinitialiser les styles de tous les boutons
+   document.querySelectorAll('.section-button').forEach(button => {
+     button.classList.remove('bg-blue-500', 'text-white');
+     button.classList.add('bg-gray-300', 'text-gray-700');
+   });
+
+   // Appliquer le style actif au bouton sélectionné
+   clickedButton.classList.remove('bg-gray-300', 'text-gray-700');
+   clickedButton.classList.add('bg-blue-500', 'text-white');
+ }
+ </script>
+  <script>
+
+function incrementLike(button) {
+  const countElement = button.querySelector('.like-count');
+  let count = parseInt(countElement.textContent);
+  countElement.textContent = count + 1;
+
+  // Change the button's color when clicked
+  button.classList.toggle('text-red-500'); // Change icon color to red
+  button.classList.toggle('bg-red-100');  // Add background color (light red)
+}
+
+function incrementHeart(button) {
+  const countElement = button.querySelector('.heart-count');
+  let count = parseInt(countElement.textContent);
+  countElement.textContent = count + 1;
+
+  // Change the button's color when clicked
+  button.classList.toggle('text-yellow-500'); // Change icon color to yellow
+  button.classList.toggle('bg-yellow-100');  // Add background color (light yellow)
+}
+
+function shareMeme(button) {
+  alert('Le meme a été partagé!');
+
+  // Change the button's color when clicked
+  button.classList.toggle('text-blue-500'); // Change icon color to blue
+  button.classList.toggle('bg-blue-100');  // Add background color (light blue)
+}
+
+
+    function showSection(sectionId) {
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.add('hidden');
+      });
+      document.getElementById(sectionId).classList.remove('hidden');
+    }
+
+    function redirectToSignup() {
+      alert("Redirection vers la page d'inscription");
+    }
+
+    function scrollToLogin() {
+      alert("Défilement vers la section de connexion");
+    }
+
+    function redirectToProfile() {
+      window.location.href = 'mon_espace.html'; // Remplacez par l'URL de votre page profil
+    }
+
+    function incrementLike(button) {
+      const countElement = button.querySelector('.like-count');
+      let count = parseInt(countElement.textContent);
+      countElement.textContent = count + 1;
+    }
+
+    function incrementHeart(button) {
+      const countElement = button.querySelector('.heart-count');
+      let count = parseInt(countElement.textContent);
+      countElement.textContent = count + 1;
+    }
+
+    function shareMeme() {
+      alert('Le meme a été partagé!');
+    }
+
+    // Fonction pour afficher/masquer le menu mobile
+    function toggleMenu() {
+      const menu = document.getElementById("mobile-menu");
+      menu.classList.toggle("hidden");
+    }
+
+    function toggleBookmark(button) {
+  // Trouver l'icône
+  const icon = button.querySelector('i');
+  
+  // Alterner entre couleur claire et sombre pour l'icône
+  if (icon.classList.contains('text-yellow-500')) {
+    icon.classList.remove('text-yellow-500');  // Supprimer la couleur claire
+    icon.classList.add('text-gray-700');       // Ajouter la couleur sombre
+  } else {
+    icon.classList.remove('text-gray-700');   // Supprimer la couleur sombre
+    icon.classList.add('text-yellow-500');     // Revenir à la couleur claire
+  }
+}
+function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.add('hidden');
+      });
+      // Show the selected section
+      document.getElementById(sectionId).classList.remove('hidden');
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById("mobile-menu");
+      menu.classList.toggle("hidden");
+    }
+
+    function toggleSettings() {
+      // Hide main content and show settings section
+      showSection('parametres');
+    }
+
+  </script>
+  <style>
+    body {
+    font-family: 'Comic Neue', cursive;
+    background: linear-gradient(to right, #f9f9f9, #99ccff, #cc99ff);
+}
+  </style>
+</head>
+<body class=" min-h-screen p-0 m-0">
+  <!-- Header -->
+  <header class="bg-slate-200 flex items-center justify-between p-4 w-full shadow-md">
+    <div class="flex items-center space-x-2 sm:space-x-3">
+      <img src="logo.jpg" alt="Logo" class="w-8 sm:w-10 h-8 sm:h-10 rounded-full">
+      <span class="text-lg sm:text-2xl font-bold text-gray-800">MemeAREA</span>
+    </div>
+    
+    <!-- Search Bar -->
+    <div class="relative w-full max-w-[200px] sm:max-w-xs md:max-w-sm flex items-center">
+      <input type="text" placeholder="Recherchez sur MemeArea" class="pl-10 pr-4 py-1 sm:py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full text-sm sm:text-base transition-all duration-300">
+      <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+        <i class="fas fa-search text-gray-500 text-sm sm:text-base"></i>
+      </div>
+    </div>
+  
+    <!-- Hamburger Menu for Mobile -->
+    <button class="sm:hidden text-gray-700 ml-2" onclick="toggleMenu()">
+      <i class="fas fa-bars text-xl"></i>
+    </button>
+  
+    <!-- Desktop Menu Buttons -->
+    <div class="hidden sm:flex items-center space-x-3 sm:space-x-4">
+      <button class="text-gray-700 hover:text-white"><i class="fas fa-cog text-xl sm:text-2xl"></i></button>
+      <button onclick="redirectToAcceuil()" class="bg-[#FFCCFF] text-gray-800 font-semibold px-2 md:px-4 py-1 md:py-2 rounded-lg shadow hover:bg-[#FF99CC] hover:text-white">Acceuil</button>
+      <button onclick="redirectToGenerate()" class="bg-white text-[#6699FF] font-semibold px-2 md:px-4 py-1 md:py-2 rounded-lg shadow hover:bg-[#336699] hover:text-white">Créer</button>
+      <div class="flex items-center space-x-1 sm:space-x-2">
+        <i class="fas fa-user-circle text-2xl sm:text-3xl text-gray-700"></i>
+        <button onclick="redirectToProfile()" class="text-gray-700 font-medium text-sm sm:text-base hover:text-white">Mon espace</button>
+      </div>
+    </div>
+   
+  </header>
+
+  <!-- Bouton de retour -->
+<div class="mt-4 p-4">
+  <a href="acceuil.html" class="flex items-center text-gray-700 hover:text-blue-500">
+    <i class="fas fa-arrow-left text-xl mr-2"></i> Retour 
+  </a>
+</div>
+
+   <!-- Menu mobile -->
+   <div id="mobile-menu" class="sm:hidden hidden flex-col space-y-2 items-center p-4 bg-gradient-to-r from-[#6699FF] to-[#99CCFF]">
+    <button onclick="redirectToAcceuil()" class="bg-[#FFCCFF] text-gray-800 font-semibold px-2 py-1 rounded-lg shadow hover:bg-[#FF99CC] hover:text-white w-full text-center">Acceuil</button>
+    <button onclick="redirectToGenerate()" class="bg-white text-[#6699FF] font-semibold px-2 py-1 rounded-lg shadow hover:bg-[#336699] hover:text-white w-full text-center">Créer</button>
+    <button onclick="redirectToProfile()" class="text-gray-700 font-medium text-sm sm:text-base hover:text-white w-full text-center">Mon espace</button>
+    <button onclick="showSection('parametres')" class="text-gray-700 font-medium text-sm sm:text-base hover:text-white w-full text-center">Paramètres</button>
+  </div>
+
+  <main class="flex items-stretch justify-center p-4 max-w-4xl mx-auto mt-6 mb-20 flex-col md:flex-row">
+    <!-- Image du mème -->
+    <div class="w-full flex items-center z-1 h-[600px]">
+      <img src="13.jpg" alt="Mème" class="w-full h-full object-fill rounded-lg shadow-md border border-gray-200">
+    </div>
+  
+    <!-- Détails et actions -->
+    <div class="w-full  bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between h-[600px]">
+      <!-- Informations de l'utilisateur -->
+      <div class="flex items-center space-x-3">
+        <img src="profile.png" alt="Avatar" class="w-10 h-12 rounded-full">
+        <div>
+          <p class="text-lg font-semibold">Taha</p>
+          <span class="text-sm text-gray-500">Posté il y a 2h</span>
+        </div>
+      </div>
+  
+      <!-- Description -->
+      <div class="bg-gray-100 p-4 rounded mt-4 flex-1">
+        <p class="text-gray-700">Texte du mème ou description de l'image. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ullamcorper...</p>
+      </div>
+  
+      <!-- Option choisie pour le bouton -->
+      <!-- Utilisez l'une des deux options ici -->
+  
+      <!-- Option 1 : Bouton en pleine largeur -->
+      <div class="mt-4">
+        <button class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+          S'abonner
+        </button>
+      </div>
+  
+      <!-- Ou bien Option 2 : Bouton centré -->
+      <!--
+      <div class="flex justify-center mt-4">
+        <button class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+          S'abonner
+        </button>
+      </div>
+      -->
+  
+      <!-- Icônes de réaction -->
+      <!-- Icônes de réaction -->
+<div class="flex space-x-6 text-gray-500 text-xl mt-4">
+  <!-- Bouton Aimer -->
+  <button onclick="incrementLike(this)" class="text-red-500   hover:text-red-700 ">
+    <i class="fas fa-heart"></i> <span class="like-count">0</span>
+  </button>
+
+  <!-- Bouton Enregistrer -->
+  <!-- Bouton Enregistrer -->
+<!-- Bouton Enregistrer -->
+<button onclick="toggleBookmark(this)" class="text-yellow-500">
+  <i class="fas fa-bookmark"></i> <span class="heart-count"></span>
+</button>
+
+
+
+  <!-- Bouton Partager -->
+  <button onclick="shareMeme(this)" class="text-blue-500">
+    <i class="fas fa-share"></i>
+  </button>
+</div>
+
+      <!-- Zone de commentaires -->
+      <div class="mt-4">
+        <h3 class="text-lg font-semibold mb-2">Commentaires</h3>
+        <div class="space-y-4">
+          <!-- Exemple de commentaire -->
+          <div class="border-b border-gray-300 pb-2">
+            <span class="font-semibold">Utilisateur 1 :</span>
+            <p class="text-gray-700">Super drôle ! 😂</p>
+          </div>
+          <div class="border-b border-gray-300 pb-2">
+            <span class="font-semibold">Utilisateur 2 :</span>
+            <p class="text-gray-700">J'adore ce mème ! 👍</p>
+          </div>
+        </div>
+  
+        <!-- Champ pour ajouter un commentaire -->
+        <div class="mt-4">
+          <input type="text" placeholder="Ajouter un commentaire..." class="w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-400">
+        </div>
+      </div>
+    </div>
+  </main>
+    
+  
+
+  
+
+  <!-- Footer navigation for mobile -->
+  
+
+</body>
+</html>
